@@ -162,14 +162,12 @@ class InMemoryFileSystem:
     
 
     def serialize_tree(self, node):
-        print(node.content,node.name)
         serialized = {'name': node.name, 'is_dir': node.is_dir, 'content': node.content, 'children': {}}
         for child_name, child_node in node.children.items():
             serialized['children'][child_name] = self.serialize_tree(child_node)
         return serialized
 
     def deserialize_tree(self, serialized):
-        print(serialized)
         node = Node(serialized['name'], is_dir=serialized['is_dir'], content=serialized['content'])
         for child_name, child_data in serialized['children'].items():
             child_node = self.deserialize_tree(child_data)
